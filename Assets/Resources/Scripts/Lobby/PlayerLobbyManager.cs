@@ -26,7 +26,10 @@ public class PlayerLobbyManager : Photon.PunBehaviour {
 			leaveRoomButton.SetActive(false);
 			return;
 		}
-		
+
+		PhotonNetwork.automaticallySyncScene = true;
+		startGameButton.SetActive(PhotonNetwork.isMasterClient);
+
 		UpdateNames();
 	}
 
@@ -94,5 +97,9 @@ public class PlayerLobbyManager : Photon.PunBehaviour {
 
 	public override void OnLeftRoom() {
 		SceneManager.LoadScene("RoomLobby");
+	}
+
+	public void StartGame() {
+		PhotonNetwork.LoadLevel("Game");
 	}
 }
