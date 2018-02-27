@@ -7,12 +7,12 @@ public class GamePlayerManager : Photon.PunBehaviour {
 	public static GamePlayerManager instance;
 
 	[SerializeField]
-	GameObject playerPrefab;
+	GameObject playerManagerPrefab;
 
 	void Start () {
 		instance = this;
 
-		PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
+		PhotonNetwork.Instantiate(playerManagerPrefab.name, Vector3.zero, Quaternion.identity, 0);
 	}
 
 	public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer) {

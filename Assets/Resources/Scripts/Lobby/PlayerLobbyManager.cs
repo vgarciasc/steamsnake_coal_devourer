@@ -27,6 +27,11 @@ public class PlayerLobbyManager : Photon.PunBehaviour {
 			return;
 		}
 
+		PhotonNetwork.room.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() {{"reversed", false}});
+		if (PhotonNetwork.room.PlayerCount == 1) {
+			PhotonNetwork.room.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() {{"first_player_ID", PhotonNetwork.player.ID}});
+		}
+
 		PhotonNetwork.automaticallySyncScene = true;
 		startGameButton.SetActive(PhotonNetwork.isMasterClient);
 

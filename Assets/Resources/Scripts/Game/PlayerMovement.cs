@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : Photon.PunBehaviour {
 
+	bool isLink;
+	bool isBoss;
+
 	void Start () {
+		isLink = (bool) photonView.owner.CustomProperties["is_link"];
+		isBoss = (bool) photonView.owner.CustomProperties["is_boss"];
+
+		if (isLink) GetComponent<SpriteRenderer>().color = Color.green;
+		else if (isBoss) GetComponent<SpriteRenderer>().color = Color.red;
+
 		if (photonView.isMine) {
 			this.transform.position = new Vector3(
 				Random.Range(-1.5f, 1.5f),
