@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerManagerPrefab: {fileID: 1272002549220000, guid: 2c9d85ef26891624ea8659cc04c00b74,
     type: 2}
+  steamsnakePrefab: {fileID: 1595438984012722, guid: cfc66e98cd0bead42b5b5084ec04bbc6,
+    type: 2}
 --- !u!1 &2048363377
 GameObject:
   m_ObjectHideFlags: 0

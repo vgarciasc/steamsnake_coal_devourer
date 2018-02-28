@@ -10,6 +10,7 @@ public class GamePlayerManager : Photon.PunBehaviour {
 	GameObject playerManagerPrefab;
 
 	void Start () {
+		if (!PhotonNetwork.inRoom) return;
 		instance = this;
 
 		PhotonNetwork.Instantiate(playerManagerPrefab.name, Vector3.zero, Quaternion.identity, 0);
@@ -20,6 +21,8 @@ public class GamePlayerManager : Photon.PunBehaviour {
 	}
 
 	public static void ExitGame() {
+		if (!PhotonNetwork.inRoom) return;
+
 		PhotonNetwork.LeaveRoom();
 		SceneManager.LoadScene("RoomLobby");
 	}

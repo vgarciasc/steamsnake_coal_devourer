@@ -9,44 +9,73 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1272002549220000}
+  m_RootGameObject: {fileID: 1595438984012722}
   m_IsPrefabParent: 1
---- !u!1 &1272002549220000
+--- !u!1 &1495384615418902
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4790723608255036}
-  - component: {fileID: 114829133020351910}
-  - component: {fileID: 114547627031698700}
+  - component: {fileID: 4380025716438368}
   m_Layer: 0
-  m_Name: PlayerManagerPrefab
+  m_Name: Blobs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4790723608255036
+--- !u!1 &1595438984012722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4786305788579530}
+  - component: {fileID: 114699135138536142}
+  - component: {fileID: 114638874870671048}
+  m_Layer: 0
+  m_Name: Steamsnake
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4380025716438368
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1272002549220000}
+  m_GameObject: {fileID: 1495384615418902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
+  m_Father: {fileID: 4786305788579530}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4786305788579530
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595438984012722}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.401, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4380025716438368}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114547627031698700
+--- !u!114 &114638874870671048
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1272002549220000}
+  m_GameObject: {fileID: 1595438984012722}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
@@ -56,31 +85,28 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 114699135138536142}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
---- !u!114 &114829133020351910
+--- !u!114 &114699135138536142
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1272002549220000}
+  m_GameObject: {fileID: 1595438984012722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5277a66822f327647a65ed47f21f1534, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f2c967c260a9ff4bbb3c79d5f18239f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBoss: 0
-  isLink: 0
-  playerPrefab: {fileID: 1272002549220000, guid: 242253c4cda2e1d4da920dd46c38122a,
-    type: 2}
-  steamsnakePrefab: {fileID: 1595438984012722, guid: cfc66e98cd0bead42b5b5084ec04bbc6,
-    type: 2}
+  blobPrefab: {fileID: 1116655602109498, guid: b468be0a8a5b93049b5239d960e1602b, type: 2}
+  blobContainer: {fileID: 4380025716438368}
+  currentDirection: 3

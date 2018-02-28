@@ -9,6 +9,8 @@ public class PlayerManager : Photon.PunBehaviour {
 
 	[SerializeField]
 	GameObject playerPrefab;
+	[SerializeField]
+	GameObject steamsnakePrefab;
 
 	void Start () {
 		int first_player_ID = (int) PhotonNetwork.room.CustomProperties["first_player_ID"];
@@ -20,7 +22,11 @@ public class PlayerManager : Photon.PunBehaviour {
 		photonView.owner.SetCustomProperties(new ExitGames.Client.Photon.Hashtable() {{"is_link", isLink}});
 
 		if (photonView.isMine) {
-			GameObject go = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
+			if (isLink) {
+				GameObject go = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
+			} else if (isBoss) {
+				GameObject go = PhotonNetwork.Instantiate(steamsnakePrefab.name, Vector3.zero, Quaternion.identity, 0);
+			}
 		}
 	}
 }
