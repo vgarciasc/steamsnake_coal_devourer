@@ -24,6 +24,8 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	void Start () {
 		InitializeBlobs();
 
+		if ((bool) PhotonNetwork.player.CustomProperties["is_link"]) return;
+
 		StartCoroutine(Move());
 	} 
 	
@@ -70,10 +72,11 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 		while (true) {
 			yield return new WaitForSeconds(speed);
 
-			Advance(currentDirection);
+			photonView.RPC("Advance", PhotonTargets.All, currentDirection);
 		}
 	}
 
+	[PunRPC]
 	void Advance(Direction direction) {
 		var head = blobPositions.ElementAt(blobPositions.Count - 1);
 		

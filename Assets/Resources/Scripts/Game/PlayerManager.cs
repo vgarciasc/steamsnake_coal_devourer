@@ -8,7 +8,7 @@ public class PlayerManager : Photon.PunBehaviour {
 	public bool isLink;
 
 	[SerializeField]
-	GameObject playerPrefab;
+	GameObject linkPrefab;
 	[SerializeField]
 	GameObject steamsnakePrefab;
 
@@ -23,9 +23,12 @@ public class PlayerManager : Photon.PunBehaviour {
 
 		if (photonView.isMine) {
 			if (isLink) {
-				GameObject go = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);
+				GameObject go = PhotonNetwork.Instantiate(linkPrefab.name, Vector3.zero, Quaternion.identity, 0);
+				Camera.main.orthographicSize = 1.5f;
+				Camera.main.gameObject.transform.SetParent(go.transform);
 			} else if (isBoss) {
 				GameObject go = PhotonNetwork.Instantiate(steamsnakePrefab.name, Vector3.zero, Quaternion.identity, 0);
+				Camera.main.orthographicSize = 3.5f;
 			}
 		}
 	}

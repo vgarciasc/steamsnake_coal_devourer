@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : Photon.PunBehaviour {
+public class LinkMovement : Photon.PunBehaviour {
 
 	bool isLink;
 	bool isBoss;
 
+	Rigidbody2D rb;
+
 	void Start () {
 		isLink = (bool) photonView.owner.CustomProperties["is_link"];
 		isBoss = (bool) photonView.owner.CustomProperties["is_boss"];
-
 		if (isLink) GetComponent<SpriteRenderer>().color = Color.green;
 		else if (isBoss) GetComponent<SpriteRenderer>().color = Color.red;
+
+		rb = this.GetComponentInChildren<Rigidbody2D>();
 
 		if (photonView.isMine) {
 			this.transform.position = new Vector3(
@@ -33,10 +36,10 @@ public class PlayerMovement : Photon.PunBehaviour {
 		float horizontal = Input.GetAxis("Horizontal");		
 		float vertical = Input.GetAxis("Vertical");
 
-		this.transform.position += new Vector3(
+		rb.velocity = new Vector3(
 			horizontal,
 			vertical
-		) * Time.deltaTime * 5f;
+		) * 2f;
 	}
 
 	void HandleLeaveRoom() {

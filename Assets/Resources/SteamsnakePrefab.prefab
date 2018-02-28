@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 114699135138536142}
   - component: {fileID: 114638874870671048}
   m_Layer: 0
-  m_Name: Steamsnake
+  m_Name: SteamsnakePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -80,7 +80,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBoss: 0
   isLink: 0
-  playerPrefab: {fileID: 1272002549220000, guid: 242253c4cda2e1d4da920dd46c38122a,
-    type: 2}
+  linkPrefab: {fileID: 1272002549220000, guid: 242253c4cda2e1d4da920dd46c38122a, type: 2}
   steamsnakePrefab: {fileID: 1595438984012722, guid: cfc66e98cd0bead42b5b5084ec04bbc6,
     type: 2}
