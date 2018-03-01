@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: wall_tile2
+  m_Name: grass_1
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: e221e99ab7b327a49855bb56b5b79c53, type: 3}
-  m_Color: {r: 0.50735295, g: 0.3477375, b: 0.26113755, a: 1}
+  m_Sprite: {fileID: 21300000, guid: e95bf4f0982feaa429edbc63a890f075, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
