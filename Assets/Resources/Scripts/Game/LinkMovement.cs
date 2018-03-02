@@ -8,14 +8,16 @@ public class LinkMovement : Photon.PunBehaviour {
 	bool isBoss;
 
 	Rigidbody2D rb;
+	Animator animator;
+	SpriteRenderer sr;
 
 	void Start () {
 		isLink = (bool) photonView.owner.CustomProperties["is_link"];
 		isBoss = (bool) photonView.owner.CustomProperties["is_boss"];
-		if (isLink) GetComponent<SpriteRenderer>().color = Color.green;
-		else if (isBoss) GetComponent<SpriteRenderer>().color = Color.red;
 
 		rb = this.GetComponentInChildren<Rigidbody2D>();
+		animator = this.GetComponentInChildren<Animator>();
+		sr = this.GetComponentInChildren<SpriteRenderer>();
 
 		if (photonView.isMine) {
 			this.transform.position = new Vector3(
@@ -29,22 +31,18 @@ public class LinkMovement : Photon.PunBehaviour {
 		if (!photonView.isMine) return;
 
 		HandleMovement();
-		HandleLeaveRoom();
 	}
 
 	void HandleMovement() {
 		float horizontal = Input.GetAxis("Horizontal");		
 		float vertical = Input.GetAxis("Vertical");
 
+		animator.SetBool("walking", rb.velocity.magnitude > 0.5f);
+		if (rb.velocity.x != 0) sr.flipX = (rb.velocity.x < 0f);
+
 		rb.velocity = new Vector3(
 			horizontal,
 			vertical
 		) * 2f;
-	}
-
-	void HandleLeaveRoom() {
-		if (Input.GetKeyDown(KeyCode.L)) {
-			GamePlayerManager.ExitGame();
-		}
 	}
 }

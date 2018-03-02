@@ -32,4 +32,14 @@ public class PlayerManager : Photon.PunBehaviour {
 			}
 		}
 	}
+
+	void Update() {
+		HandleLeaveRoom();
+	}
+
+	void HandleLeaveRoom() {
+		if (Input.GetKeyDown(KeyCode.L)) {
+			GamePlayerManager.ExitGame();
+		}
+	}
 }
