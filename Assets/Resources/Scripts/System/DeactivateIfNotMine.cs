@@ -16,8 +16,6 @@ public class DeactivateIfNotMine : Photon.PunBehaviour {
 			_photonView = aux.GetComponent<PhotonView>();
 			aux = aux.transform.parent;
 		}
-		
-		print("Photon View: " + _photonView.gameObject);
 
 		if (PhotonNetwork.inRoom && !_photonView.isMine) {
 			this.gameObject.SetActive(false);

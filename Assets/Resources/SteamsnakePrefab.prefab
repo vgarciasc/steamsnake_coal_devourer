@@ -232,7 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74182f34b6f125e4d857549d8f18fefa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
 --- !u!114 &114638874870671048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -274,7 +273,7 @@ MonoBehaviour:
   headBlobPrefab: {fileID: 1116655602109498, guid: d0eaa7d1239fd4641a25a3997616c273,
     type: 2}
   blobContainer: {fileID: 4380025716438368}
-  currentDirection: 3
+  viewRadius: 2
 --- !u!212 &212456171660541020
 SpriteRenderer:
   m_ObjectHideFlags: 1

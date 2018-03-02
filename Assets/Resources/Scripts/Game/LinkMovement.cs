@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LinkMovement : Photon.PunBehaviour {
+public class LinkMovement : Photon.PunBehaviour, IPunObservable {
 
 	bool isLink;
 	bool isBoss;
@@ -10,6 +10,8 @@ public class LinkMovement : Photon.PunBehaviour {
 	Rigidbody2D rb;
 	Animator animator;
 	SpriteRenderer sr;
+
+	bool flipSprite;
 
 	void Start () {
 		isLink = (bool) photonView.owner.CustomProperties["is_link"];
@@ -23,7 +25,11 @@ public class LinkMovement : Photon.PunBehaviour {
 	}
 	
 	void Update () {
-		if (!photonView.isMine) return;
+		HandleAnimation();
+
+		if (!photonView.isMine) {
+			return;
+		};
 
 		HandleMovement();
 	}
@@ -32,12 +38,25 @@ public class LinkMovement : Photon.PunBehaviour {
 		float horizontal = Input.GetAxis("Horizontal");		
 		float vertical = Input.GetAxis("Vertical");
 
-		animator.SetBool("walking", rb.velocity.magnitude > 0.5f);
-		if (rb.velocity.x != 0) sr.flipX = (rb.velocity.x < 0f);
-
 		rb.velocity = new Vector3(
 			horizontal,
 			vertical
 		) * 2f;
+
+		if (rb.velocity.x != 0) flipSprite = (rb.velocity.x < 0f);
 	}
+
+	void HandleAnimation() {
+		animator.SetBool("walking", rb.velocity.magnitude > 0.5f);
+		sr.flipX = flipSprite;
+	}
+
+    void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.isWriting) {
+		    stream.SendNext(flipSprite);
+		}
+		else {
+			flipSprite = (bool) stream.ReceiveNext();
+		}
+    }
 }

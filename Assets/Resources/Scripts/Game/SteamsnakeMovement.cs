@@ -7,6 +7,7 @@ using UnityEngine;
 public enum Direction { NONE, UP, DOWN, LEFT, RIGHT };
 public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 
+	[Header("References")]
 	[SerializeField]
 	GameObject blobPrefab;
 	[SerializeField]
@@ -18,9 +19,13 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	Vector2[] blobPositionsArray;
 	List<GameObject> blobs = new List<GameObject>();
 
-	[SerializeField]
 	Direction currentDirection = Direction.LEFT;
 
+	[Header("Mechanics")]
+	[SerializeField]
+	float viewRadius = 4f;
+
+	SpriteRenderer linkSprite;
 	float speed = 0.6f;
 
 	void Start () {
@@ -40,7 +45,8 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 
 		if ((bool) PhotonNetwork.player.CustomProperties["is_link"]) return;
 
-		HandleDirection();	
+		HandleDirection();
+		HandleVisibility();
 	}
 
 	void InitializeBlobs() {
@@ -163,4 +169,12 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 		}
     }
 
+	void HandleVisibility() {
+		GameObject link = GameObject.FindGameObjectWithTag("Link");
+		if (link == null) return;
+
+		link.GetComponent<SpriteRenderer>().enabled = (
+			(blobs.Last().transform.position - link.transform.position).magnitude < viewRadius
+		);
+	}
 }
