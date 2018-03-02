@@ -26,9 +26,10 @@ public class PlayerManager : Photon.PunBehaviour {
 				GameObject go = PhotonNetwork.Instantiate(linkPrefab.name, Vector3.zero, Quaternion.identity, 0);
 				Camera.main.orthographicSize = 1.5f;
 				Camera.main.gameObject.transform.SetParent(go.transform);
+				Camera.main.transform.localPosition = new Vector3(0, 0, -10);
 			} else if (isBoss) {
 				GameObject go = PhotonNetwork.Instantiate(steamsnakePrefab.name, Vector3.zero, Quaternion.identity, 0);
-				Camera.main.orthographicSize = 3.5f;
+				// Camera.main.orthographicSize = 5.05f;
 			}
 		}
 	}

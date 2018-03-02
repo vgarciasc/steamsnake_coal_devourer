@@ -9,6 +9,9 @@ public class GamePlayerManager : Photon.PunBehaviour {
 	[SerializeField]
 	GameObject playerManagerPrefab;
 
+	public Transform linkSpawn;	
+	public Transform snakeSpawn;
+
 	void Start () {
 		if (!PhotonNetwork.inRoom) return;
 		instance = this;

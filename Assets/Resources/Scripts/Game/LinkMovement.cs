@@ -19,12 +19,7 @@ public class LinkMovement : Photon.PunBehaviour {
 		animator = this.GetComponentInChildren<Animator>();
 		sr = this.GetComponentInChildren<SpriteRenderer>();
 
-		if (photonView.isMine) {
-			this.transform.position = new Vector3(
-				Random.Range(-1.5f, 1.5f),
-				Random.Range(-1.5f, 1.5f),
-				0f);
-		}
+		this.transform.position = GamePlayerManager.instance.linkSpawn.position;
 	}
 	
 	void Update () {

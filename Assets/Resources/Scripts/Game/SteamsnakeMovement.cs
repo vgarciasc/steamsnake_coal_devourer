@@ -10,6 +10,8 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	[SerializeField]
 	GameObject blobPrefab;
 	[SerializeField]
+	GameObject headBlobPrefab;
+	[SerializeField]
 	Transform blobContainer;
 
 	List<Vector2> blobPositions = new List<Vector2>();
@@ -22,14 +24,18 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	float speed = 0.6f;
 
 	void Start () {
+		this.transform.position = GamePlayerManager.instance.snakeSpawn.position;
 		InitializeBlobs();
 
+		if (!PhotonNetwork.inRoom) return;
 		if ((bool) PhotonNetwork.player.CustomProperties["is_link"]) return;
 
 		StartCoroutine(Move());
 	} 
 	
 	void Update () {
+		if (!PhotonNetwork.inRoom) return;
+
 		UpdateBody();
 
 		if ((bool) PhotonNetwork.player.CustomProperties["is_link"]) return;
@@ -38,11 +44,14 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	}
 
 	void InitializeBlobs() {
+		HushPuppy.destroyChildren(blobContainer.gameObject);
+
 		blobs = new List<GameObject>();
 		blobPositions = new List<Vector2>();
+		int size = 5;
 
-		for (int i = 0; i < 5; i++) {
-			var go = Instantiate(blobPrefab,
+		for (int i = 0; i < size; i++) {
+			var go = Instantiate(i == size - 1 ? headBlobPrefab : blobPrefab,
 				this.transform.position + (Vector3.up * 0.5f * i),
 				Quaternion.identity);
 			go.transform.SetParent(blobContainer);
@@ -94,6 +103,15 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 			case Direction.DOWN:
 				offset = new Vector3(0, -1, 0);
 				break;
+		}
+
+		RaycastHit2D hit = Physics2D.Raycast(
+			blobs.Last().transform.position,
+			offset, 
+			0.5f, 
+			LayerMask.NameToLayer("Walls") | LayerMask.NameToLayer("Snake"));
+		if (hit.collider != null) {
+			return;
 		}
 
 		Vector3 newHead = head + offset * 0.5f;
