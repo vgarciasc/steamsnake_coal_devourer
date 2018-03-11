@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public enum Direction { NONE, UP, DOWN, LEFT, RIGHT };
 public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 
 	[Header("References")]
@@ -97,7 +96,7 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 		
 		Vector2 offset = Vector2.zero;
 		switch (direction) {
-			case Direction.UP:
+			case Direction.TOP:
 				offset = new Vector3(0, 1, 0);
 				break;
 			case Direction.RIGHT:
@@ -106,7 +105,7 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 			case Direction.LEFT:
 				offset = new Vector3(-1, 0, 0);
 				break;
-			case Direction.DOWN:
+			case Direction.BOTTOM:
 				offset = new Vector3(0, -1, 0);
 				break;
 		}
@@ -145,8 +144,8 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 
 		if (horizontal < 0f) dir = Direction.LEFT;
 		else if (horizontal > 0f) dir = Direction.RIGHT;
-		else if (vertical > 0f) dir = Direction.UP;
-		else if (vertical < 0f) dir = Direction.DOWN;
+		else if (vertical > 0f) dir = Direction.TOP;
+		else if (vertical < 0f) dir = Direction.BOTTOM;
 
 		if (dir != Direction.NONE && !OppositeDirections(currentDirection, dir)) {
 			currentDirection = dir;
@@ -156,8 +155,8 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	public static bool OppositeDirections(Direction dir_1, Direction dir_2) {
 		return (dir_1 == Direction.LEFT && dir_2 == Direction.RIGHT ||
 			dir_2 == Direction.LEFT && dir_1 == Direction.RIGHT ||
-			dir_1 == Direction.UP && dir_2 == Direction.DOWN ||
-			dir_2 == Direction.UP && dir_1 == Direction.DOWN);
+			dir_1 == Direction.TOP && dir_2 == Direction.BOTTOM ||
+			dir_2 == Direction.TOP && dir_1 == Direction.BOTTOM);
 	}
 
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

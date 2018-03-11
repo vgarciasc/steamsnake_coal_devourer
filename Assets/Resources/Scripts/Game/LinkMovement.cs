@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LinkMovement : Photon.PunBehaviour, IPunObservable {
 
+	public Direction currentDirection = Direction.NONE;
+
 	bool isLink;
 	bool isBoss;
 
@@ -44,6 +46,7 @@ public class LinkMovement : Photon.PunBehaviour, IPunObservable {
 		) * 2f;
 
 		if (rb.velocity.x != 0) flipSprite = (rb.velocity.x < 0f);
+		currentDirection = (flipSprite ? Direction.RIGHT : Direction.LEFT);
 	}
 
 	void HandleAnimation() {
@@ -54,9 +57,11 @@ public class LinkMovement : Photon.PunBehaviour, IPunObservable {
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
 		    stream.SendNext(flipSprite);
+			stream.SendNext(currentDirection);
 		}
 		else {
 			flipSprite = (bool) stream.ReceiveNext();
+			currentDirection = (Direction) stream.ReceiveNext();
 		}
     }
 }

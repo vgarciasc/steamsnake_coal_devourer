@@ -815,6 +815,7 @@ MonoBehaviour:
   heldObjectPrefab: {fileID: 1295737685128374, guid: 56ad8c17a2a12ba4680a4576835505f1,
     type: 2}
   heldObject: {fileID: 0}
+  throwModifier: 10
 --- !u!114 &114502441216350870
 MonoBehaviour:
   m_ObjectHideFlags: 1
