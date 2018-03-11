@@ -9,5 +9,8 @@ public class SteamsnakeHead : MonoBehaviour {
 		if (obj.tag == "Link" && PhotonNetwork.isMasterClient) {
 			StartCoroutine(GameOverManager.instance.EndGame(false));
 		}
+		if (obj.tag == "Bomb" && PhotonNetwork.isMasterClient) {
+			StartCoroutine(GameOverManager.instance.EndGame(true));
+		}
 	}
 }

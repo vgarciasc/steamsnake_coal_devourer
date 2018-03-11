@@ -7,6 +7,7 @@ TagManager:
   - Link
   - World
   - Block
+  - Bomb
   layers:
   - Default
   - TransparentFX
