@@ -38,4 +38,6 @@ MonoBehaviour:
   - RequestForPickupTimes
   - Advance
   - GameOverBanner
+  - StartHolding
+  - StopHolding
   DisableAutoOpenWizard: 1

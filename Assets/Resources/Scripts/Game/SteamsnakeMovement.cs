@@ -170,11 +170,11 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
     }
 
 	void HandleVisibility() {
-		GameObject link = GameObject.FindGameObjectWithTag("Link");
-		if (link == null) return;
-
-		link.GetComponent<SpriteRenderer>().enabled = (
-			(blobs.Last().transform.position - link.transform.position).magnitude < viewRadius
-		);
+		var invisibles = FindObjectsOfType<InvisibleToBoss>();
+		foreach (var inv in invisibles) {
+			inv.GetComponent<SpriteRenderer>().enabled = (
+				(blobs.Last().transform.position - inv.transform.position).magnitude < viewRadius
+			);
+		}
 	}
 }
