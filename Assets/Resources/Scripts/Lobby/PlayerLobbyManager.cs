@@ -40,7 +40,6 @@ public class PlayerLobbyManager : Photon.PunBehaviour {
 
 	void UpdateNames() {
 		playerNames = new List<string>();
-		print("playerList[0]: " + PhotonNetwork.playerList[0].NickName);
 		playerNames.Add(PhotonNetwork.playerList[0].NickName);
 
 		if (PhotonNetwork.room.PlayerCount > 1) {
@@ -51,12 +50,14 @@ public class PlayerLobbyManager : Photon.PunBehaviour {
 	}
 
 	public void ShowNames() {
+		if (playerNames.Count == 0) return;
+
 		string player_1 = "---";
 		string player_2 = "---";
 
 		if (playerNames.Count == 1) {
 			player_1 = playerNames[0];
-		} else {
+		} else if (playerNames.Count == 2) {
 			bool reversed = GetReversed();
 			player_1 = reversed ? playerNames[1] : playerNames[0];
 			player_2 = reversed ? playerNames[0] : playerNames[1];
