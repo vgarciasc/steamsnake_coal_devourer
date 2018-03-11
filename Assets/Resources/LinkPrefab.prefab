@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 114254785274470540}
   - component: {fileID: 114470537793561170}
   - component: {fileID: 114109878515506610}
+  - component: {fileID: 114608988650712066}
   m_Layer: 10
   m_Name: LinkPrefab
   m_TagString: Link
@@ -718,6 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c5eae79ea08f148a44939d475c04e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentDirection: 0
 --- !u!114 &114081519131814252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -815,7 +817,6 @@ MonoBehaviour:
   heldObjectPrefab: {fileID: 1295737685128374, guid: 56ad8c17a2a12ba4680a4576835505f1,
     type: 2}
   heldObject: {fileID: 0}
-  throwModifier: 10
 --- !u!114 &114502441216350870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -828,6 +829,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seen: []
+--- !u!114 &114608988650712066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272002549220000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056f2c82c558ccd458b2cb8b261b0074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114774580102995564
 MonoBehaviour:
   m_ObjectHideFlags: 1

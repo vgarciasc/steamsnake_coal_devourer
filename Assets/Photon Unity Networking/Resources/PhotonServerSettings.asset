@@ -43,4 +43,5 @@ MonoBehaviour:
   - HoldObject
   - PutDownObject
   - ThrowObject
+  - ToggleRay
   DisableAutoOpenWizard: 1

@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 114699135138536142}
   - component: {fileID: 114638874870671048}
   - component: {fileID: 114015579051790606}
+  - component: {fileID: 114398031156908278}
   m_Layer: 0
   m_Name: SteamsnakePrefab
   m_TagString: Untagged
@@ -230,6 +231,17 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74182f34b6f125e4d857549d8f18fefa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114398031156908278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595438984012722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761f7c621e856f64aae06bcbc39aab14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114638874870671048

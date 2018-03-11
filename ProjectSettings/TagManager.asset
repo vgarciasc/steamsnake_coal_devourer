@@ -8,6 +8,7 @@ TagManager:
   - World
   - Block
   - Bomb
+  - SnakeRay
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Snake
   - Link
   - Object
-  - 
+  - SnakeRay
   - 
   - 
   - 

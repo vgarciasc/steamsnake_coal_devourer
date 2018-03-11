@@ -27,6 +27,9 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	SpriteRenderer linkSprite;
 	float speed = 0.6f;
 
+	public bool canMove = true;
+	public bool canMoveHead = true;
+
 	void Start () {
 		this.transform.position = GamePlayerManager.instance.snakeSpawn.position;
 		InitializeBlobs();
@@ -85,6 +88,7 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	IEnumerator Move() {
 		while (true) {
 			yield return new WaitForSeconds(speed);
+			yield return new WaitUntil(() => canMove);
 
 			photonView.RPC("Advance", PhotonTargets.All, currentDirection);
 		}
@@ -127,13 +131,20 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	}
 
 	void UpdateBody() {
-		for (int i = 0; i < blobPositions.Count; i++) {
+		for (int i = 0; i < blobPositions.Count - 1; i++) {
 			if (blobPositions.ElementAt(i) != (Vector2) blobs[i].transform.position) {
 				blobs[i].transform.DOMove(
 					blobPositions.ElementAt(i),
 					speed);
 			}
 		}
+
+		int k = blobPositions.Count - 1;
+		blobs[k].transform.DOMove(
+			blobPositions.ElementAt(k),
+			speed).OnComplete(() => {
+				GetHead().RotateToDirection(currentDirection);
+			});
 	}
 
 	void HandleDirection() {
@@ -147,7 +158,7 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 		else if (vertical > 0f) dir = Direction.TOP;
 		else if (vertical < 0f) dir = Direction.BOTTOM;
 
-		if (dir != Direction.NONE && !OppositeDirections(currentDirection, dir)) {
+		if (dir != Direction.NONE && !OppositeDirections(currentDirection, dir) && canMoveHead) {
 			currentDirection = dir;
 		}
 	}
@@ -175,5 +186,9 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 				(blobs.Last().transform.position - inv.transform.position).magnitude < viewRadius
 			);
 		}
+	}
+
+	public SteamsnakeHead GetHead() {
+		return blobs.Last().GetComponent<SteamsnakeHead>();
 	}
 }
