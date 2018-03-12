@@ -9,6 +9,8 @@ TagManager:
   - Block
   - Bomb
   - SnakeRay
+  - LinkInstakill
+  - Explosion
   layers:
   - Default
   - TransparentFX
@@ -51,4 +53,7 @@ TagManager:
     locked: 0
   - name: Link
     uniqueID: 2296343119
+    locked: 0
+  - name: Scenario
+    uniqueID: 779132147
     locked: 0

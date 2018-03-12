@@ -25,7 +25,7 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	float viewRadius = 4f;
 
 	SpriteRenderer linkSprite;
-	float speed = 0.6f;
+	float speed = 0.2f;
 
 	public bool canMove = true;
 	public bool canMoveHead = true;
@@ -135,7 +135,7 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 			if (blobPositions.ElementAt(i) != (Vector2) blobs[i].transform.position) {
 				blobs[i].transform.DOMove(
 					blobPositions.ElementAt(i),
-					speed);
+					speed).SetEase(Ease.Linear);
 			}
 		}
 
@@ -144,7 +144,7 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 			blobPositions.ElementAt(k),
 			speed).OnComplete(() => {
 				GetHead().RotateToDirection(currentDirection);
-			});
+			}).SetEase(Ease.Linear);
 	}
 
 	void HandleDirection() {

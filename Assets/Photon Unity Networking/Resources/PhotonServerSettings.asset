@@ -44,4 +44,6 @@ MonoBehaviour:
   - PutDownObject
   - ThrowObject
   - ToggleRay
+  - Die
+  - SpawnItem
   DisableAutoOpenWizard: 1

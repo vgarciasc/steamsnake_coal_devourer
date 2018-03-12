@@ -12,8 +12,16 @@ public class LinkMovement : Photon.PunBehaviour, IPunObservable {
 	Rigidbody2D rb;
 	Animator animator;
 	SpriteRenderer sr;
+	float speed = 2f;
 
 	bool flipSprite;
+	LinkManager manager;
+
+	[Header("Mechanics")]
+	[Range(0f, 1f)]
+	public float holdingEncumberance = 0.25f;
+
+	public bool canMove = true;
 
 	void Start () {
 		isLink = (bool) photonView.owner.CustomProperties["is_link"];
@@ -22,6 +30,7 @@ public class LinkMovement : Photon.PunBehaviour, IPunObservable {
 		rb = this.GetComponentInChildren<Rigidbody2D>();
 		animator = this.GetComponentInChildren<Animator>();
 		sr = this.GetComponentInChildren<SpriteRenderer>();
+		manager = this.GetComponent<LinkManager>();
 
 		this.transform.position = GamePlayerManager.instance.linkSpawn.position;
 	}
@@ -33,7 +42,9 @@ public class LinkMovement : Photon.PunBehaviour, IPunObservable {
 			return;
 		};
 
-		HandleMovement();
+		if (canMove) {
+			HandleMovement();
+		}
 	}
 
 	void HandleMovement() {
@@ -43,7 +54,7 @@ public class LinkMovement : Photon.PunBehaviour, IPunObservable {
 		rb.velocity = new Vector3(
 			horizontal,
 			vertical
-		) * 2f;
+		) * speed * (manager.heldObject == null ? 1f : holdingEncumberance);
 
 		if (rb.velocity.x != 0) flipSprite = (rb.velocity.x < 0f);
 		currentDirection = (flipSprite ? Direction.RIGHT : Direction.LEFT);

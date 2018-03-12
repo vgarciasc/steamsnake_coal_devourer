@@ -14,17 +14,25 @@ public class LinkManager : Photon.PunBehaviour {
 	[SerializeField]
 	GameObject heldObjectPrefab;
 	[SerializeField]
-	GameObject heldObject;
+	GameObject bloodSplatter;
+
+	public GameObject heldObject;
+	public float viewRadius;
 
 	LinkMovement linkMovement;
+	SpriteRenderer sr;
+	Rigidbody2D rb;
 
 	void Start() {
 		linkMovement = this.GetComponent<LinkMovement>();
+		sr = this.GetComponentInChildren<SpriteRenderer>();
+		rb = this.GetComponentInChildren<Rigidbody2D>();
 	}
 
 	void Update () {
 		if (photonView.isMine) {
 			HandleHolding();
+			HandleVisibility();
 		}		
 	}
 
@@ -76,6 +84,11 @@ public class LinkManager : Photon.PunBehaviour {
 		// heldObject.transform.DOMove(heldObjectContainer.transform.position, 0.2f);
 		heldObject.transform.position = heldObjectContainer.transform.position;
 		heldObject.GetComponentInChildren<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
+		var bomb = heldObject.GetComponentInChildren<Bomb>();
+		if (bomb != null) {
+			StartCoroutine(bomb.PrepareAndExplode());
+		}
 	}
 
 	[PunRPC]
@@ -108,5 +121,23 @@ public class LinkManager : Photon.PunBehaviour {
 		heldObject.GetComponent<Rigidbody2D>().velocity = new Vector3(throwModifier * flip, -2f);
 
 		heldObject = null;
+	}
+
+	void HandleVisibility() {
+		var invisibles = FindObjectsOfType<InvisibleToLink>();
+		foreach (var inv in invisibles) {
+			inv.GetComponent<SpriteRenderer>().enabled = (
+				(this.transform.position - inv.transform.position).magnitude < viewRadius
+			);
+		}
+	}
+
+	[PunRPC]
+	public void Die() {
+		var obj = Instantiate(bloodSplatter, this.transform.position, Quaternion.identity);
+		obj.transform.SetParent(GameObject.FindGameObjectWithTag("World").transform);
+		sr.enabled = false;
+		rb.velocity = Vector3.zero;
+		linkMovement.canMove = false;
 	}
 }

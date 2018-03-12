@@ -268,7 +268,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1272002549220000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.9055743, y: -6.511114, z: 0}
+  m_LocalPosition: {x: 4.855029, y: -8.728229, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4695606435488922}
@@ -427,7 +427,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 0.4, y: 0.4}
   m_EdgeRadius: 0
 --- !u!61 &61319620766816244
 BoxCollider2D:
@@ -502,7 +502,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 0.4, y: 0.4}
   m_EdgeRadius: 0
 --- !u!61 &61806611464212126
 BoxCollider2D:
@@ -720,6 +720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDirection: 0
+  holdingEncumberance: 0.487
 --- !u!114 &114081519131814252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -816,7 +817,10 @@ MonoBehaviour:
   heldObjectContainer: {fileID: 1627675377242108}
   heldObjectPrefab: {fileID: 1295737685128374, guid: 56ad8c17a2a12ba4680a4576835505f1,
     type: 2}
+  bloodSplatter: {fileID: 1868728559324708, guid: 8abcdd9d44d1b7f4db6feef034bbd425,
+    type: 2}
   heldObject: {fileID: 0}
+  viewRadius: 1.4
 --- !u!114 &114502441216350870
 MonoBehaviour:
   m_ObjectHideFlags: 1
