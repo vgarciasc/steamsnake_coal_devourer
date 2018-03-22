@@ -62,12 +62,12 @@ public class LinkManager : Photon.PunBehaviour {
 			if (heldObject == null && seen_obj.Count > 0) {
 				photonView.RPC("HoldObject", PhotonTargets.All, seen_obj[0].GetPhotonView().viewID);
 			}
-			else if (heldObject != null) {
+			else if (heldObject != null && !GetCurrentLinkFOV().ContainsWall()) {
 				photonView.RPC("PutDownObject", PhotonTargets.All);
 			}
 		}
 		if (Input.GetKeyDown(KeyCode.F)) {
-			if (heldObject != null) {
+			if (heldObject != null && !GetCurrentLinkFOV().ContainsWall()) {
 				photonView.RPC("ThrowObject", PhotonTargets.All);
 			}
 		}
@@ -87,16 +87,12 @@ public class LinkManager : Photon.PunBehaviour {
 
 		var bomb = heldObject.GetComponentInChildren<Bomb>();
 		if (bomb != null) {
-			StartCoroutine(bomb.PrepareAndExplode());
+			bomb.StartExploding();
 		}
 	}
 
 	[PunRPC]
 	void PutDownObject() {
-		if (GetCurrentLinkFOV().ContainsWall()) {
-			return;
-		}
-
 		heldObject.GetComponentInChildren<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 		heldObject.transform.SetParent(GameObject.FindGameObjectWithTag("World").transform);
 
@@ -108,10 +104,6 @@ public class LinkManager : Photon.PunBehaviour {
 
 	[PunRPC]
 	void ThrowObject() {
-		if (GetCurrentLinkFOV().ContainsWall()) {
-			return;
-		}
-
 		float throwModifier = 10f;
 
 		heldObject.GetComponentInChildren<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;

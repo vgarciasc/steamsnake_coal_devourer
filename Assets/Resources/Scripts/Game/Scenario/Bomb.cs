@@ -10,7 +10,13 @@ public class Bomb : MonoBehaviour {
 	public GameObject circleOfDoom;
 	bool exploding = false;
 
-	public IEnumerator PrepareAndExplode() {
+	Coroutine explodingCoroutine;
+
+	public void StartExploding() {
+		explodingCoroutine = StartCoroutine(PrepareAndExplode());
+	}
+
+	IEnumerator PrepareAndExplode() {
 		float time = 5f;
 		float division = 0.5f;
 
@@ -38,5 +44,15 @@ public class Bomb : MonoBehaviour {
 		
 		ItemSpawner.instance.SpawnItemRandomPos();
 		Destroy(this.gameObject);
+	}
+
+	void OnCollisionEnter2D(Collision2D collision) {
+		var obj = collision.gameObject;
+		var head = obj.GetComponentInChildren<SteamsnakeHead>();
+
+		if (head != null && explodingCoroutine != null) {
+			StopCoroutine(explodingCoroutine);
+			StartCoroutine(Explode());
+		}
 	}
 }
