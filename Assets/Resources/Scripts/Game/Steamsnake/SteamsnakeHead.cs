@@ -26,13 +26,6 @@ public class SteamsnakeHead : MonoBehaviour {
 		this.transform.rotation = Quaternion.Euler(0, 0, turns * 90);
 	}
 
-	void OnCollisionEnter2D(Collision2D collision) {
-		var obj = collision.gameObject;
-		if (obj.tag == "Link" && PhotonNetwork.isMasterClient) {
-			StartCoroutine(GameOverManager.instance.EndGame(false));
-		}
-	}
-
 	void OnTriggerEnter2D(Collider2D collider) {
 		var obj = collider.gameObject;
 		if (obj.tag == "Explosion" && PhotonNetwork.isMasterClient) {

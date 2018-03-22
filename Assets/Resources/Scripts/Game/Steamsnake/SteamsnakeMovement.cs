@@ -19,6 +19,7 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	List<GameObject> blobs = new List<GameObject>();
 
 	Direction currentDirection = Direction.LEFT;
+	Vector3 lastHeadPosition = Vector3.zero;
 
 	[Header("Mechanics")]
 	[SerializeField]
@@ -29,6 +30,7 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 
 	public bool canMove = true;
 	public bool canMoveHead = true;
+	public bool isMoving { get; private set; }
 
 	void Start () {
 		this.transform.position = GamePlayerManager.instance.snakeSpawn.position;
@@ -145,6 +147,9 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 			speed).OnComplete(() => {
 				GetHead().RotateToDirection(currentDirection);
 			}).SetEase(Ease.Linear);
+
+		isMoving = lastHeadPosition != GetHead().transform.position;
+		lastHeadPosition = GetHead().transform.position;
 	}
 
 	void HandleDirection() {

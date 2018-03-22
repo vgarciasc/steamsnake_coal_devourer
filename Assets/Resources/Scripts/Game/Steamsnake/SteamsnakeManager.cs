@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SteamsnakeManager : Photon.PunBehaviour {
 
-	SteamsnakeMovement movement;
+	public SteamsnakeMovement movement;
 
 	void Start() {
 		movement = this.GetComponent<SteamsnakeMovement>();

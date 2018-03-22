@@ -11,7 +11,10 @@ public class LinkColliders : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D collider) {
 		var obj = collider.gameObject;
-		if ((obj.tag == "SnakeRay" || obj.tag == "Explosion" || obj.tag == "LinkInstakill") && PhotonNetwork.isMasterClient) {
+		if ((obj.tag == "SnakeRay" 
+			|| obj.tag == "Explosion" 
+			|| obj.tag == "LinkInstakill" 
+			|| obj.GetComponentInChildren<SteamsnakeHead>() != null) && PhotonNetwork.isMasterClient) {
 			StartCoroutine(Die());
 		}
 	}

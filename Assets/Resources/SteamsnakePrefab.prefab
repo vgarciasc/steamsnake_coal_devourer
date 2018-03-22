@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 114398031156908278}
   m_Layer: 0
   m_Name: SteamsnakePrefab
-  m_TagString: Untagged
+  m_TagString: Snake
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761f7c621e856f64aae06bcbc39aab14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movement: {fileID: 0}
 --- !u!114 &114638874870671048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,6 +287,8 @@ MonoBehaviour:
     type: 2}
   blobContainer: {fileID: 4380025716438368}
   viewRadius: 2
+  canMove: 1
+  canMoveHead: 1
 --- !u!212 &212456171660541020
 SpriteRenderer:
   m_ObjectHideFlags: 1

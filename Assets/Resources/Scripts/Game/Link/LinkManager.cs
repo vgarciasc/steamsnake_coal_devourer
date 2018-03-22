@@ -22,18 +22,28 @@ public class LinkManager : Photon.PunBehaviour {
 	LinkMovement linkMovement;
 	SpriteRenderer sr;
 	Rigidbody2D rb;
+	SpecialCamera specialCamera;
+
+	SteamsnakeManager steamsnakeManager;
 
 	void Start() {
 		linkMovement = this.GetComponent<LinkMovement>();
 		sr = this.GetComponentInChildren<SpriteRenderer>();
 		rb = this.GetComponentInChildren<Rigidbody2D>();
+
+		specialCamera = Camera.main.GetComponentInParent<SpecialCamera>();
 	}
 
 	void Update () {
 		if (photonView.isMine) {
 			HandleHolding();
 			HandleVisibility();
-		}		
+			HandleSnakeShake();
+		}
+
+		if (Input.GetKeyDown(KeyCode.P)) {
+			Camera.main.GetComponentInParent<SpecialCamera>().screenShake_(0.00001f);
+		}
 	}
 
 	List<GameObject> SeenObjects() {
@@ -131,5 +141,24 @@ public class LinkManager : Photon.PunBehaviour {
 		sr.enabled = false;
 		rb.velocity = Vector3.zero;
 		linkMovement.canMove = false;
+	}
+
+	void HandleSnakeShake() {
+		if (steamsnakeManager == null) {
+			var aux = GameObject.FindGameObjectWithTag("Snake");
+			if (aux == null) return;
+			steamsnakeManager = aux.GetComponentInChildren<SteamsnakeManager>();
+		}
+
+		if (steamsnakeManager.movement.isMoving) {
+			float distance = Vector3.Distance(steamsnakeManager.movement.GetHead().transform.position, this.transform.position);
+			float threshold = 3f;
+			if (distance > threshold) return;
+
+			float power = (-1 / threshold) * distance + 1f;
+			power = Mathf.Clamp(power, 0f, 1f);
+
+			specialCamera.screenShake_(power);
+		}
 	}
 }

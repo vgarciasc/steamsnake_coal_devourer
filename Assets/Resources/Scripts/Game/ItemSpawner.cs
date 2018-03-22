@@ -41,10 +41,9 @@ public class ItemSpawner : Photon.PunBehaviour {
 			return;
 		}
 
-		photonView.RPC("SpawnItem", PhotonTargets.All, randomPos);
+		SpawnItem(randomPos);
 	}
 
-	[PunRPC]
 	void SpawnItem(Vector3 position) {
 		var obj = PhotonNetwork.Instantiate("Bomb Prefab", position, Quaternion.identity, 0);
 		obj.transform.SetParent(GameObject.FindGameObjectWithTag("World").transform);
