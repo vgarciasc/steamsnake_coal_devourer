@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114030930234118662}
   - component: {fileID: 50953126557985732}
   - component: {fileID: 114220377582080300}
+  - component: {fileID: 114584054740280900}
   m_Layer: 11
   m_Name: Bomb Prefab
   m_TagString: Bomb
@@ -266,6 +267,17 @@ MonoBehaviour:
   sr: {fileID: 212236363214767080}
   explosion: {fileID: 198654970633337888}
   circleOfDoom: {fileID: 1631695323817372}
+--- !u!114 &114584054740280900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1393646979388254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b6637da9b7d8de48ba7836878fc178d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114657900758151028
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -46,4 +46,5 @@ MonoBehaviour:
   - ToggleRay
   - Die
   - SpawnItem
+  - PlaceFootstep
   DisableAutoOpenWizard: 1

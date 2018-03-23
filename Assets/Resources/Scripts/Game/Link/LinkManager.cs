@@ -40,10 +40,6 @@ public class LinkManager : Photon.PunBehaviour {
 			HandleVisibility();
 			HandleSnakeShake();
 		}
-
-		if (Input.GetKeyDown(KeyCode.P)) {
-			Camera.main.GetComponentInParent<SpecialCamera>().screenShake_(0.00001f);
-		}
 	}
 
 	List<GameObject> SeenObjects() {
@@ -150,7 +146,7 @@ public class LinkManager : Photon.PunBehaviour {
 			steamsnakeManager = aux.GetComponentInChildren<SteamsnakeManager>();
 		}
 
-		if (steamsnakeManager.movement.isMoving) {
+		if (steamsnakeManager != null && steamsnakeManager.movement.isMoving) {
 			float distance = Vector3.Distance(steamsnakeManager.movement.GetHead().transform.position, this.transform.position);
 			float threshold = 5f;
 			if (distance > threshold) return;
