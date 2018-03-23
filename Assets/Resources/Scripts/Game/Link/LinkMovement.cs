@@ -32,7 +32,7 @@ public class LinkMovement : Photon.PunBehaviour, IPunObservable {
 		sr = this.GetComponentInChildren<SpriteRenderer>();
 		manager = this.GetComponent<LinkManager>();
 
-		this.transform.position = GamePlayerManager.instance.linkSpawn.position;
+		this.transform.position = GamePlayerManager.instance.GetLinkSpawn();
 	}
 	
 	void Update () {

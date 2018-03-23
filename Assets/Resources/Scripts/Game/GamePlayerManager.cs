@@ -9,7 +9,7 @@ public class GamePlayerManager : Photon.PunBehaviour {
 	[SerializeField]
 	GameObject playerManagerPrefab;
 
-	public Transform linkSpawn;	
+	public List<Transform> linkSpawns;	
 	public Transform snakeSpawn;
 
 	void Start () {
@@ -28,5 +28,9 @@ public class GamePlayerManager : Photon.PunBehaviour {
 
 		PhotonNetwork.LeaveRoom();
 		SceneManager.LoadScene("RoomLobby");
+	}
+
+	public Vector3 GetLinkSpawn() {
+		return linkSpawns[Random.Range(0, linkSpawns.Count)].position;
 	}
 }

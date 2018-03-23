@@ -152,7 +152,7 @@ public class LinkManager : Photon.PunBehaviour {
 
 		if (steamsnakeManager.movement.isMoving) {
 			float distance = Vector3.Distance(steamsnakeManager.movement.GetHead().transform.position, this.transform.position);
-			float threshold = 3f;
+			float threshold = 5f;
 			if (distance > threshold) return;
 
 			float power = (-1 / threshold) * distance + 1f;

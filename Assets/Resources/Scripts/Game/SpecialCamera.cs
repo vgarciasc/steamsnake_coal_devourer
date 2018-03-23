@@ -25,7 +25,7 @@ public class SpecialCamera : MonoBehaviour {
     #region Screen Shake
     public void screenShake_(float power) { StartCoroutine(screenShake(power)); }
     IEnumerator screenShake(float power) {
-        var max = 0.025f;
+        var max = 0.050f;
         var min = 0.005f;
 
         power = (max - min) * power + min;
