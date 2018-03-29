@@ -47,4 +47,6 @@ MonoBehaviour:
   - Die
   - SpawnItem
   - PlaceFootstep
+  - UpdateBlobList
+  - UpdateHeadRotation
   DisableAutoOpenWizard: 1

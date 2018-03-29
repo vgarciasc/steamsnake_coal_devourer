@@ -34,57 +34,46 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 
 	void Start () {
 		this.transform.position = GamePlayerManager.instance.snakeSpawn.position;
-		InitializeBlobs();
 
 		if (!PhotonNetwork.inRoom) return;
 		if ((bool) PhotonNetwork.player.CustomProperties["is_link"]) return;
 
+		HushPuppy.destroyChildren(blobContainer.gameObject);
+		InitializeBlobs();
 		StartCoroutine(Move());
 	} 
 	
 	void Update () {
 		if (!PhotonNetwork.inRoom) return;
 
-		UpdateBody();
-
 		if ((bool) PhotonNetwork.player.CustomProperties["is_link"]) return;
 
+		UpdateBody();
 		HandleDirection();
 		HandleVisibility();
 	}
 
 	void InitializeBlobs() {
-		HushPuppy.destroyChildren(blobContainer.gameObject);
-
 		blobs = new List<GameObject>();
 		blobPositions = new List<Vector2>();
 		int size = 5;
 
 		for (int i = 0; i < size; i++) {
-			var go = Instantiate(i == size - 1 ? headBlobPrefab : blobPrefab,
+			var go = PhotonNetwork.Instantiate(
+				i == size - 1 ? "Steamsnake Head Blob Prefab" : "Steamsnake Body Blob Prefab",
 				this.transform.position + (Vector3.up * 0.5f * i),
-				Quaternion.identity);
-			go.transform.SetParent(blobContainer);
-			blobs.Add(go);
-
-			blobPositions.Add(go.transform.position);
-		}
-
-		UpdateArrayFromList();
-	}
-
-	void UpdateListFromArray() {
-		blobPositions = new List<Vector2>();
-		for (int i = 0; i < blobPositionsArray.Length; i++) {
-			blobPositions.Add(blobPositionsArray[i]);
+				Quaternion.identity,
+				0);
+			photonView.RPC("UpdateBlobList", PhotonTargets.All, go.GetPhotonView().viewID);
 		}
 	}
 
-	void UpdateArrayFromList() {
-		blobPositionsArray = new Vector2[blobPositions.Count];
-		for (int i = 0; i < blobPositions.Count; i++) {
-			blobPositionsArray[i] = blobPositions[i];
-		}
+	[PunRPC]
+	void UpdateBlobList(int id) {
+		GameObject go = PhotonView.Find(id).gameObject;
+		blobs.Add(go.gameObject);
+		go.transform.SetParent(blobContainer);
+		blobPositions.Add(go.transform.position);
 	}
 
 	IEnumerator Move() {
@@ -92,11 +81,10 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 			yield return new WaitForSeconds(speed);
 			yield return new WaitUntil(() => canMove);
 
-			photonView.RPC("Advance", PhotonTargets.All, currentDirection);
+			Advance(currentDirection);
 		}
 	}
 
-	[PunRPC]
 	void Advance(Direction direction) {
 		var head = blobPositions.ElementAt(blobPositions.Count - 1);
 		
@@ -146,10 +134,16 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 			blobPositions.ElementAt(k),
 			speed).OnComplete(() => {
 				GetHead().RotateToDirection(currentDirection);
+				photonView.RPC("UpdateHeadRotation", PhotonTargets.Others);
 			}).SetEase(Ease.Linear);
 
 		isMoving = lastHeadPosition != GetHead().transform.position;
 		lastHeadPosition = GetHead().transform.position;
+	}
+
+	[PunRPC]
+	void UpdateHeadRotation() {
+		GetHead().RotateToDirection(currentDirection);
 	}
 
 	void HandleDirection() {
