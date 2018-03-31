@@ -12,6 +12,7 @@ TagManager:
   - LinkInstakill
   - Explosion
   - Snake
+  - TilemapWall
   layers:
   - Default
   - TransparentFX
