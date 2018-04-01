@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 50172555283872764}
   - component: {fileID: 114704655004690020}
   - component: {fileID: 114854944670645576}
+  - component: {fileID: 114357659981176868}
   m_Layer: 11
   m_Name: Rock
   m_TagString: Block
@@ -59,7 +60,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 200
   m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -153,6 +154,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 142bdda866772a14db34919760941fdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114357659981176868
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1172829124435558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeb3ea2e28839474396bc1ced0067b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114602089434581106

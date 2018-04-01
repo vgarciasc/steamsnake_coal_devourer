@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class SteamsnakeHead : MonoBehaviour {
 
+	SteamsnakeManager manager;
 	public GameObject ray;
+
+	void Start() {
+		manager = this.transform.GetComponentInParent<SteamsnakeManager>();
+	}
 
 	public void RotateToDirection(Direction direction) {
 		float turns = 0;
@@ -29,7 +34,7 @@ public class SteamsnakeHead : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collider) {
 		var obj = collider.gameObject;
 		if (obj.tag == "Explosion" && PhotonNetwork.isMasterClient) {
-			StartCoroutine(GameOverManager.instance.EndGame(true));
+			manager.Die();
 		}
 	}
 }

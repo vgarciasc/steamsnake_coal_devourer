@@ -49,4 +49,7 @@ MonoBehaviour:
   - PlaceFootstep
   - UpdateBlobList
   - UpdateHeadRotation
+  - ShootRay
+  - AddTrail
+  - DieAnimation
   DisableAutoOpenWizard: 1

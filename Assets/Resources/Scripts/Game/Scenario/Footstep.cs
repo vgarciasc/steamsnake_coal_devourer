@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class LinkFootstep : MonoBehaviour {
+public class Footstep : MonoBehaviour {
 
 	public float lifetime = 5f;
 

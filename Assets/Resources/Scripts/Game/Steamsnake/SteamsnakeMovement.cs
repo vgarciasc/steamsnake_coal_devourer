@@ -19,7 +19,11 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 	List<GameObject> blobs = new List<GameObject>();
 
 	Direction currentDirection = Direction.LEFT;
-	Vector3 lastHeadPosition = Vector3.zero;
+	Vector3 lastTailPosition = Vector3.zero;
+
+	[Header("References")]
+	[SerializeField]
+	GameObject trailPrefab;
 
 	[Header("Mechanics")]
 	[SerializeField]
@@ -105,13 +109,17 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 		}
 
 		RaycastHit2D hit = Physics2D.Raycast(
-			blobs.Last().transform.position,
+			GetHead().transform.position,
 			offset, 
 			0.5f, 
-			LayerMask.NameToLayer("Walls") | LayerMask.NameToLayer("Snake"));
+			(1 << LayerMask.NameToLayer("Wall"))
+			 | (1 << LayerMask.NameToLayer("Snake"))
+			 | (1 << LayerMask.NameToLayer("Object")));
 		if (hit.collider != null) {
 			return;
 		}
+
+		photonView.RPC("AddTrail", PhotonTargets.All, blobPositions[0]);
 
 		Vector3 newHead = head + offset * 0.5f;
 		blobPositions.RemoveAt(0);
@@ -137,13 +145,19 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
 				photonView.RPC("UpdateHeadRotation", PhotonTargets.Others);
 			}).SetEase(Ease.Linear);
 
-		isMoving = lastHeadPosition != GetHead().transform.position;
-		lastHeadPosition = GetHead().transform.position;
+		isMoving = lastTailPosition != GetTail().transform.position;
+		lastTailPosition = GetTail().transform.position;
 	}
 
 	[PunRPC]
 	void UpdateHeadRotation() {
 		GetHead().RotateToDirection(currentDirection);
+	}
+
+	[PunRPC]
+	void AddTrail(Vector2 position) {
+		var obj = Instantiate(trailPrefab, position, Quaternion.identity);
+		obj.transform.SetParent(GameObject.FindGameObjectWithTag("World").transform);
 	}
 
 	void HandleDirection() {
@@ -172,22 +186,37 @@ public class SteamsnakeMovement : Photon.PunBehaviour, IPunObservable {
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
 		    stream.SendNext(currentDirection);
+		    stream.SendNext(isMoving);
 		}
 		else {
 			currentDirection = (Direction) stream.ReceiveNext();
+			isMoving = (bool) stream.ReceiveNext();
 		}
     }
 
 	void HandleVisibility() {
 		var invisibles = FindObjectsOfType<InvisibleToBoss>();
 		foreach (var inv in invisibles) {
+			var linkManager = inv.GetComponentInChildren<LinkManager>();
+			if (linkManager != null && linkManager.isDead) continue;
+
 			inv.GetComponent<SpriteRenderer>().enabled = (
-				(blobs.Last().transform.position - inv.transform.position).magnitude < viewRadius
+				(GetHead().transform.position - inv.transform.position).magnitude < viewRadius
 			);
 		}
 	}
 
 	public SteamsnakeHead GetHead() {
 		return blobs.Last().GetComponent<SteamsnakeHead>();
+	}
+
+	public Transform GetTail() {
+		return blobs.First().transform;
+	}
+
+	public void MassExplode() {
+		foreach (GameObject go in blobs) {
+			go.GetComponentInChildren<ParticleSystem>().Play();
+		}
 	}
 }

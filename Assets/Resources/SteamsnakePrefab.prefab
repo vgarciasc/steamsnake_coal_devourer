@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 114699135138536142}
+  isShootingRay: 0
 --- !u!114 &114638874870671048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,6 +287,8 @@ MonoBehaviour:
   headBlobPrefab: {fileID: 1116655602109498, guid: d0eaa7d1239fd4641a25a3997616c273,
     type: 2}
   blobContainer: {fileID: 4380025716438368}
+  trailPrefab: {fileID: 1526763709006756, guid: 2b20fdb55a6728a4c9cadecad80203b5,
+    type: 2}
   viewRadius: 2
   canMove: 1
   canMoveHead: 1

@@ -13,6 +13,7 @@ TagManager:
   - Explosion
   - Snake
   - TilemapWall
+  - Footstep
   layers:
   - Default
   - TransparentFX

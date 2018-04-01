@@ -18,6 +18,7 @@ public class LinkManager : Photon.PunBehaviour {
 
 	public GameObject heldObject;
 	public float viewRadius;
+	public bool isDead = false;
 
 	LinkMovement linkMovement;
 	SpriteRenderer sr;
@@ -137,6 +138,7 @@ public class LinkManager : Photon.PunBehaviour {
 		sr.enabled = false;
 		rb.velocity = Vector3.zero;
 		linkMovement.canMove = false;
+		isDead = true;
 	}
 
 	void HandleSnakeShake() {
@@ -146,15 +148,20 @@ public class LinkManager : Photon.PunBehaviour {
 			steamsnakeManager = aux.GetComponentInChildren<SteamsnakeManager>();
 		}
 
-		if (steamsnakeManager != null && steamsnakeManager.movement.isMoving) {
-			float distance = Vector3.Distance(steamsnakeManager.movement.GetHead().transform.position, this.transform.position);
-			float threshold = 5f;
-			if (distance > threshold) return;
+		if (steamsnakeManager != null) {
+			if (steamsnakeManager.movement.isMoving) {
+				float distance = Vector3.Distance(steamsnakeManager.movement.GetHead().transform.position, this.transform.position);
+				float threshold = 5f;
+				float power = (-1 / threshold) * distance + 1f;
+				power = Mathf.Clamp(power, 0f, 1f);
+				if (distance > threshold) return;
+				specialCamera.screenShake_(power);
+			}
 
-			float power = (-1 / threshold) * distance + 1f;
-			power = Mathf.Clamp(power, 0f, 1f);
-
-			specialCamera.screenShake_(power);
+			if (steamsnakeManager.isShootingRay) {
+				float power = 0.7f;
+				specialCamera.screenShake_(power);
+			}
 		}
 	}
 }

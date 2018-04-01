@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 114470537793561170}
   - component: {fileID: 114109878515506610}
   - component: {fileID: 114608988650712066}
+  - component: {fileID: 114795606868591222}
   m_Layer: 10
   m_Name: LinkPrefab
   m_TagString: Link
@@ -241,7 +242,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1875684727370432}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.18, z: -4.82}
+  m_LocalPosition: {x: 0, y: -0.1, z: -4.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4790723608255036}
@@ -647,9 +648,9 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 1, g: 0.95740366, b: 0.8455882, a: 1}
-  m_Intensity: 124.66
+  m_Intensity: 1434.91
   m_Range: 7.6
-  m_SpotAngle: 16.9
+  m_SpotAngle: 20
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -750,9 +751,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentDirection: 0
-  footstepsOrigin: {fileID: 1865970674112506}
-  footstepsPrefab: {fileID: 1526763709006756, guid: eab4dd8b604087948965c0eb3fd49953,
-    type: 2}
   holdingEncumberance: 0.487
   canMove: 1
 --- !u!114 &114081519131814252
@@ -854,7 +852,8 @@ MonoBehaviour:
   bloodSplatter: {fileID: 1868728559324708, guid: 8abcdd9d44d1b7f4db6feef034bbd425,
     type: 2}
   heldObject: {fileID: 0}
-  viewRadius: 1.4
+  viewRadius: 1.6
+  isDead: 0
 --- !u!114 &114502441216350870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -906,6 +905,21 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114795606868591222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272002549220000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6020b1c603e07f4393a51d74d9f3f9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepsOrigin: {fileID: 1865970674112506}
+  footstepsPrefab: {fileID: 1526763709006756, guid: eab4dd8b604087948965c0eb3fd49953,
+    type: 2}
+  shouldRotate: 1
 --- !u!114 &114928211868731382
 MonoBehaviour:
   m_ObjectHideFlags: 1
