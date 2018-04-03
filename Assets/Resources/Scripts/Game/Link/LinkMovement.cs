@@ -57,7 +57,16 @@ public class LinkMovement : Photon.PunBehaviour, IPunObservable {
 		) * speed * (manager.heldObject == null ? 1f : holdingEncumberance);
 
 		if (rb.velocity.x != 0) flipSprite = (rb.velocity.x < 0f);
-		currentDirection = (flipSprite ? Direction.RIGHT : Direction.LEFT);
+
+		if (rb.velocity.x < 0) {
+			currentDirection = Direction.LEFT;
+		} else if (rb.velocity.x > 0) {
+			currentDirection = Direction.RIGHT;
+		} else if (rb.velocity.y > 0) {
+			currentDirection = Direction.TOP;
+		} else if (rb.velocity.y < 0) {
+			currentDirection = Direction.BOTTOM;
+		}
 	}
 
 	void HandleAnimation() {

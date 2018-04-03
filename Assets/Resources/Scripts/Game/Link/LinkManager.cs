@@ -75,13 +75,19 @@ public class LinkManager : Photon.PunBehaviour {
 		}
 		if (Input.GetKeyDown(KeyCode.F)) {
 			if (heldObject != null && !GetCurrentLinkFOV().ContainsWall()) {
-				photonView.RPC("ThrowObject", PhotonTargets.All);
+				photonView.RPC("ThrowObject", PhotonTargets.All, linkMovement.currentDirection);
 			}
 		}
 	}
 
 	public LinkFOV GetCurrentLinkFOV() {
-		return linkFOVs[linkMovement.currentDirection == Direction.LEFT ? 1 : 3];
+		switch (linkMovement.currentDirection) {
+			case Direction.LEFT: return linkFOVs[1];
+			case Direction.RIGHT: return linkFOVs[3];
+			case Direction.TOP: return linkFOVs[0];
+			case Direction.BOTTOM: return linkFOVs[2];
+		}
+		return linkFOVs[0];
 	}
 
 	[PunRPC]
@@ -110,16 +116,34 @@ public class LinkManager : Photon.PunBehaviour {
 	}
 
 	[PunRPC]
-	void ThrowObject() {
+	void ThrowObject(Direction dir) {
 		float throwModifier = 10f;
 
 		heldObject.GetComponentInChildren<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 		heldObject.transform.SetParent(GameObject.FindGameObjectWithTag("World").transform);
 
-		float flip = linkMovement.currentDirection == Direction.LEFT ? 1f : -1f;
-		heldObject.GetComponent<Rigidbody2D>().velocity = new Vector3(throwModifier * flip, -2f);
+		var vec = GetVectorFromDirection(dir) * throwModifier;
+		if (dir == Direction.LEFT || dir == Direction.RIGHT) 
+			vec -= 2 * Vector3.one;
+
+		heldObject.GetComponent<Rigidbody2D>().velocity = vec;
 
 		heldObject = null;
+	}
+
+	Vector3 GetVectorFromDirection(Direction direction) {
+		switch (direction) {
+			case Direction.TOP:
+				return Vector3.up;
+			case Direction.BOTTOM:
+				return Vector3.down;
+			case Direction.RIGHT:
+				return Vector3.right;
+			case Direction.LEFT:
+				return Vector3.left;
+		}
+
+		return Vector3.zero;
 	}
 
 	void HandleVisibility() {
