@@ -44,7 +44,7 @@ public class SteamsnakeManager : Photon.PunBehaviour {
 			head.transform.position,
 			head.transform.rotation * Vector3.down,
 			Mathf.Infinity,
-			1 << LayerMask.NameToLayer("Wall"));
+			(1 << LayerMask.NameToLayer("Wall")) | (1 << LayerMask.NameToLayer("Object")));
 		if (hit.collider == null) yield break;
 
 		Vector3 diff = hit.point - (Vector2) head.transform.position;
