@@ -6,6 +6,7 @@ using UnityEngine;
 public class LinkUI : Photon.PunBehaviour {
 
 	LinkUICompass compass;
+	LinkManager manager;
 	SteamsnakeHead steamsnakeHead;
 
 	void Start() {
@@ -13,6 +14,7 @@ public class LinkUI : Photon.PunBehaviour {
 		bool isBoss = (bool) photonView.owner.CustomProperties["is_boss"];
 
 		compass = GameObject.FindGameObjectWithTag ("LinkCompass").GetComponentInChildren<LinkUICompass>();
+		manager = this.GetComponentInChildren<LinkManager>();
 
 		if (isBoss) {
 			compass.gameObject.SetActive (false);
@@ -31,10 +33,10 @@ public class LinkUI : Photon.PunBehaviour {
 
 	void HandleCompass() {
 		Vector3 diff = (steamsnakeHead.transform.position - this.transform.position).normalized;
+		compass.ToggleIndicator(manager._isShaking);
+
 		float angle = Vector2.Angle (Vector2.up, diff);
-		print (angle);
 		angle *= (diff.x < 0 ? 1 : -1);
-		print (angle);
 
 		compass.AngleTo( angle );
 	}

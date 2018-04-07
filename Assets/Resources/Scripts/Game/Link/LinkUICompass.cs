@@ -41,4 +41,8 @@ public class LinkUICompass : MonoBehaviour {
 	public void AngleTo(float angle) {
 		indicator.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, angle));
 	}
+
+	public void ToggleIndicator(bool value) {
+		indicator.gameObject.SetActive(value);
+	}
 }

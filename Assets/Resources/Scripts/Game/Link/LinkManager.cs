@@ -165,6 +165,8 @@ public class LinkManager : Photon.PunBehaviour {
 		isDead = true;
 	}
 
+	public bool _isShaking = false;
+
 	void HandleSnakeShake() {
 		if (steamsnakeManager == null) {
 			var aux = GameObject.FindGameObjectWithTag("Snake");
@@ -173,18 +175,25 @@ public class LinkManager : Photon.PunBehaviour {
 		}
 
 		if (steamsnakeManager != null) {
+			float power = -1f;
+
 			if (steamsnakeManager.movement.isMoving) {
 				float distance = Vector3.Distance(steamsnakeManager.movement.GetHead().transform.position, this.transform.position);
 				float threshold = 5f;
-				float power = (-1 / threshold) * distance + 1f;
+				power = (-1 / threshold) * distance + 1f;
 				power = Mathf.Clamp(power, 0f, 1f);
 				if (distance > threshold) return;
-				specialCamera.screenShake_(power);
 			}
 
 			if (steamsnakeManager.isShootingRay) {
-				float power = 0.7f;
+				power = 0.7f;
+			}
+
+			if (power != -1f) {
+				_isShaking = true;
 				specialCamera.screenShake_(power);
+			} else {
+				_isShaking = false;
 			}
 		}
 	}
